@@ -6,6 +6,17 @@ import { PrismaClient } from "@prisma/client";
 import { JWT } from "next-auth/jwt";
 import { Session } from "next-auth";
 
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      email?: string | null;
+      name?: string | null;
+      image?: string | null;
+    };
+  }
+}
+
 const prisma = new PrismaClient();
 
 export const authOptions: AuthOptions = {
