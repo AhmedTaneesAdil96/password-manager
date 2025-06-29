@@ -6,13 +6,9 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: {
-  json: () =>
-    | PromiseLike<{ service: string; username: string; password: string; secondPwd: string }>
-    | { service: string; username: string; password: string; secondPwd: string };
-}) {
+export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
-  if (!session) return new Response("Unauthorized", { status: 401 });
+  if (!session || !session.user?.email) return new Response("Unauthorized", { status: 401 });
 
   const { service, username, password, secondPwd } = await req.json();
   const encryptedPwd = encrypt(password);
@@ -23,7 +19,7 @@ export async function POST(req: {
       username,
       encryptedPwd,
       secondPwd,
-      user: { connect: { email: session.user?.email } },
+      user: { connect: { email: session.user.email } },
     },
   });
 
