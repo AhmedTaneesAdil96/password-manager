@@ -7,8 +7,8 @@ const prisma = new PrismaClient();
 
 export async function POST(req: {
   json: () =>
-    | PromiseLike<{ service: any; username: any; password: any; secondPwd: any }>
-    | { service: any; username: any; password: any; secondPwd: any };
+    | PromiseLike<{ service: string; username: string; password: string; secondPwd: string }>
+    | { service: string; username: string; password: string; secondPwd: string };
 }) {
   const session = await getServerSession(authOptions);
   if (!session) return new Response("Unauthorized", { status: 401 });

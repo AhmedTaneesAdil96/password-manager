@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     router.push("/auth/signin");
-  }, []);
+  }, [router]);
 
   return <p>Redirecting...</p>;
 }

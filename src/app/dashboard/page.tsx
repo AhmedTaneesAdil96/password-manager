@@ -1,5 +1,5 @@
 "use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useToastContext } from "../components/ui/ToastContext";
 
 export default function Dashboard() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   interface Password {
     id: number;
@@ -33,7 +33,7 @@ export default function Dashboard() {
     } else if (status === "authenticated") {
       fetchPasswords();
     }
-  }, [status]);
+  }, [status, router]);
   const [open, setOpen] = useState(false);
   const [deleteDialog, setDeleteDialog] = useState<{ isOpen: boolean; id?: number; service?: string }>({ isOpen: false });
   const { showToast } = useToastContext();

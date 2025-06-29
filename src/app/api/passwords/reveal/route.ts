@@ -5,7 +5,7 @@ import { authOptions } from "../../../api/auth/[...nextauth]/route";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: { json: () => PromiseLike<{ id: any }> | { id: any } }) {
+export async function POST(req: { json: () => PromiseLike<{ id: number }> | { id: number } }) {
   const session = await getServerSession(authOptions);
   if (!session) return new Response("Unauthorized", { status: 401 });
 

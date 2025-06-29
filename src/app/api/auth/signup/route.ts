@@ -3,7 +3,7 @@ import { hash } from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: { json: () => PromiseLike<{ email: any; password: any }> | { email: any; password: any } }) {
+export async function POST(req: { json: () => PromiseLike<{ email: string; password: string }> | { email: string; password: string } }) {
   const { email, password } = await req.json();
   const userExists = await prisma.user.findUnique({ where: { email } });
 

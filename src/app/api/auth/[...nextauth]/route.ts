@@ -24,7 +24,7 @@ export const authOptions = {
         });
 
         if (user && (await compare(credentials.password, user.password))) {
-          return { id: user.id, email: user.email };
+          return { id: user.id.toString(), email: user.email };
         }
 
         return null;
