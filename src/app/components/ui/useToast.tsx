@@ -11,6 +11,5 @@ export const useToast = () => {
   };
 
   const ToastWrapper = () => (toast ? <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} /> : null);
-
   return { showToast, ToastWrapper };
 };
