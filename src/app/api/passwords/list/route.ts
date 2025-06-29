@@ -1,0 +1,29 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { PrismaClient } from "../../../../generated/prisma";
+
+const prisma = new PrismaClient();
+
+export async function GET() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const passwords = await prisma.password.findMany({
+    where: {
+      userId: Number(session.user?.id),
+    },
+    select: {
+      id: true,
+      service: true,
+      username: true,
+    },
+    orderBy: {
+      id: "desc",
+    },
+  });
+
+  return Response.json(passwords);
+}
